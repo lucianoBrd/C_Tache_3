@@ -1,6 +1,8 @@
 #ifndef __VALIDATEUR_H__
 #define __VALIDATEUR_H__
 
+#include "json.h"
+
 int validateur_content_message_json(
   char *message
 );
@@ -33,9 +35,10 @@ int validateur_valeurs_format_message_json(
   int	i
 );
 
-int validateur_guille_after_format_message_json(
+int validateur_char_after_format_message_json(
   char 	*message,
-  int	i
+  int	i,
+  char	char_test
 );
 
 

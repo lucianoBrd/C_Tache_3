@@ -1,6 +1,6 @@
-# Rapport d’auto-évaluation tache 2
+# Rapport d’auto-évaluation tache 3
 
-Lien du git : [Projet](https://github.com/lucianoBrd/C_Tache_2)
+Lien du git : [Projet](https://github.com/lucianoBrd/C_Tache_3)
 
 ## Objectif: Quel est l’objectif de votre projet?
 
@@ -15,9 +15,12 @@ Dans la [Tache1](https://github.com/lucianoBrd/C_Tache_1), nous avons géré :
    répond le résultat de l'opération.
   * Le client envoie N couleurs et le serveur les enregistre dans un fichier.
   
-Dans la tache 2, nous avons géré :
+Dans la [Tache2](https://github.com/lucianoBrd/C_Tache_2), nous avons géré :
   * L'envoie et la réception de message entre le client et le serveur au format JSON.
   * Nous avons utilisé le format d'image bmp.
+
+Dans la Tache3, nous avons géré :
+  *
 
 ## Fichiers: Noms de fichiers
 

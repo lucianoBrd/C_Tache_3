@@ -1,4 +1,4 @@
-# Tache 1
+# Tache 3
 
 ### Compiler le projet
 ```
@@ -9,8 +9,10 @@ make
 Pour executer le client :
 ```
 cd path_project/src
-./client
+./client path_image
 ```
+path_image est optionnel.
+
 Pour executer le serveur :
 ```
 cd path_project/src
