@@ -2,6 +2,7 @@
 #define __SERVER_H__
 
 #include "json.h"
+#include "validateur.h"
 
 /* Port de communication avec le client */
 #define PORT 8089

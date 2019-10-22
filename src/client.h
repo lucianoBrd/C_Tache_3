@@ -3,6 +3,7 @@
 
 #include "bmp.h"
 #include "json.h"
+#include "validateur.h"
 
 /* Port we use to communicate */
 #define PORT 8089

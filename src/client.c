@@ -59,8 +59,6 @@ int envoie_recois_message(
     /* Set the code of the message */
     strcpy(json->code, type);
 
-    json->nb_valeurs = 1;
-
     /* Ask the value of the message */
     printf("Votre %s (max %d caracteres): ", type, VALEURS_SIZE);
     fgets(json->valeurs[0], VALEURS_SIZE, stdin);
@@ -75,8 +73,6 @@ int envoie_recois_message(
     message_json *json = new_message_json(3);
     /* Set the code of the message */
     strcpy(json->code, type);
-
-    json->nb_valeurs = 3;
 
     /* Ask the value of the operator of the message */
     printf("Votre opérateur du %s (max %d caracteres): ", type, VALEURS_SIZE);
@@ -264,12 +260,25 @@ int main(
 
   char type[DATA_SIZE];
 
-  /* Ask wich function execute */
+  /* Ask wich function execute 
   printf("Quelle fonction lancer (message, nom, calcule ou couleurs): ");
   fgets(type, DATA_SIZE, stdin);
 
-  /* Remove the return line */
-  type[strcspn(type, "\n")] = 0;
+  /* Remove the return line 
+  type[strcspn(type, "\n")] = 0;*/
+  
+  /* Create object */
+  message_json *json = new_message_json(1);
+  /* Set the code of the message */
+  strcpy(json->code, "test");
+  strcpy(json->valeurs[0], "test");
+  char  data[DATA_SIZE];
+  
+  /* Create the string and delete the object */
+  create_message_json(data, json);
+  delete_message_json(json);
+  
+  printf("%d", validateur_format_message_json(data));
 
   envoie_recois_message(socketfd, type, argv[1]);
 
