@@ -268,14 +268,18 @@ int main(
   type[strcspn(type, "\n")] = 0;*/
   
   /* Create object */
-  message_json *json = new_message_json(1);
+  message_json *json = new_message_json(3);
   /* Set the code of the message */
-  strcpy(json->code, "test");
-  strcpy(json->valeurs[0], "test");
+  strcpy(json->code, "couleurs");
+  strcpy(json->valeurs[0], "10");
+  strcpy(json->valeurs[1], "oui");
+  strcpy(json->valeurs[2], "test");
+
   char  data[DATA_SIZE];
   
   /* Create the string and delete the object */
   create_message_json(data, json);
+  print_message_json(create_object_json(data));
   delete_message_json(json);
   
   printf("%d", validateur_format_message_json(data));

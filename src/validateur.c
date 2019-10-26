@@ -12,7 +12,7 @@ int validateur_content_message_json(
   json = create_object_json(message);
   
   if(	strcmp(json->code, "message")  	!= 0 &&
-    	strcmp(json->code, "nom") 	!= 0 &&
+    	strcmp(json->code, "nom") 	    != 0 &&
     	strcmp(json->code, "calcule")  	!= 0 &&
     	strcmp(json->code, "couleurs") 	!= 0 ){
     delete_message_json(json);

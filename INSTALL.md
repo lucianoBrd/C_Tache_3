@@ -18,3 +18,8 @@ Pour executer le serveur :
 cd path_project/src
 ./serveur
 ```
+### Supprimer les fichiers compilés
+```
+cd path_project/src
+make clean
+```

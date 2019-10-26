@@ -29,9 +29,17 @@ void create_message_json(
   strcat(data, "\", \"valeurs\" : [");
   for(i; i < json->nb_valeurs; i++){
     /* Put the value */
-    strcat(data, "\"");
+    if(	!(i == 0 && strcmp(json->code, "couleurs") == 0) 		&&
+	!((i == 1 || i == 2) && strcmp(json->code, "calcule") == 0)	){
+      strcat(data, "\"");
+    } /* String just in that case */
+    
     strcat(data, json->valeurs[i]);
-    strcat(data, "\"");
+    
+    if(	!(i == 0 && strcmp(json->code, "couleurs") == 0) 		&&
+	!((i == 1 || i == 2) && strcmp(json->code, "calcule") == 0)	){
+      strcat(data, "\"");
+    } /* String just in that case */
 
     /* Don't put , the last iteration */
     if(i < json->nb_valeurs - 1)
@@ -57,12 +65,12 @@ void create_message_json(
 message_json *create_object_json(
   char *message
 ){
-  int i 	  = 0,
-      compt = 0,
+  int i		= 0,
+      compt 	= 0,
       bool 	= 0;
 
   while(message[i] != '\0'){
-    if( i > 7	 		              &&
+    if( i > 7			&&
         message[i]     == 's' 	&&
         message[i - 1] == 'r' 	&&
         message[i - 2] == 'u' 	&&
@@ -77,8 +85,8 @@ message_json *create_object_json(
     } /* When find valeurs */
 
     if(bool != 0){
-      /* Count the number of " */
-      if(message[i] == '"')
+      /* Count the number of , */
+      if(message[i] == ',')
 	     compt++;
 
     } /* When we are just after the valeurs */
@@ -87,8 +95,8 @@ message_json *create_object_json(
 
   } /* Loop on the message */
 
-  /* There are 2 " for one value */
-  compt = compt / 2;
+  /* There is a valeur in more than the number of , */
+  compt = compt + 1;
 
   /* Create the object */
   message_json *json = new_message_json(compt);
@@ -142,15 +150,15 @@ message_json *create_object_json(
 
   } /* Loop on the message */
 
-  i 	        = 0;
-  bool 	      = 0;
-  bool_string = 0,
-  j           = 0;
-  compt       = 0;
+  i		= 0;
+  bool 	      	= 0;
+  bool_string 	= 0,
+  j           	= 0;
+  compt       	= 0;
 
   /* Get the valeurs */
   while(message[i] != '\0'){
-    if( i > 7	 		              &&
+    if( i > 7			&&
         message[i]     == 's' 	&&
         message[i - 1] == 'r' 	&&
         message[i - 2] == 'u' 	&&
@@ -165,26 +173,29 @@ message_json *create_object_json(
     } /* When find valeurs */
 
     if(bool != 0){
-      if(message[i] == '"'){
-	       if(bool_string == 0){
-	          bool_string = 1;
-	          i++;
+      if(message[i] != '[' && message[i] == ','){
+	if(bool_string == 0){
+	   bool_string = 1;
+	   i++;
 
-	       } else {
-           /* We finish to get the code */
-	         bool_string  = 0;
-	         tmp[j]       = '\0';
-	         strcpy(json->valeurs[compt], tmp);
-	         compt++;
-	         j = 0;
+	} else {
+	  /* We finish to get the code */
+	  bool_string  = 0;
+	  tmp[j]       = '\0';
+	  strcpy(json->valeurs[compt], tmp);
+	  compt++;
+	  j = 0;
 
-	       }
+	}
 
      } /* Know wich " is it */
 
      if(bool_string != 0){
-	      tmp[j] = message[i];
-	      j++;
+       if(message[i] != '"'){
+	tmp[j] = message[i];
+	j++;
+	
+       }
 
      } /* Save the value of the valeurs */
 
