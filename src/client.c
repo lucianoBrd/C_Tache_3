@@ -38,8 +38,8 @@ int envoie_recois_message(
 
   if(strcmp(type, "couleurs") == 0){
     if(pathname == NULL){
-	     printf("Vous devez spécifier une image.\n");
-       return 0;
+        printf("Vous devez spécifier une image.\n");
+        return 0;
 
     } /* Check if we have the path of the picture */
     return envoie_couleurs(socketfd, pathname);
@@ -97,6 +97,13 @@ int envoie_recois_message(
     delete_message_json(json);
 
   } /* Create the string JSON message */
+  
+  /* Test the message */
+  if(validateur_format_message_json(data) == -1 || validateur_content_message_json(data) == -1){
+    printf("Message à envoyer incorrect.\n");
+    return 0;
+      
+  }
 
   /* Send to the server the message */
   write_status = write(socketfd, data, strlen(data));
@@ -114,6 +121,13 @@ int envoie_recois_message(
     return -1;
 
   } /* Error read */
+  
+  /* Test the message */
+  if(validateur_format_message_json(data) == -1 || validateur_content_message_json(data) == -1){
+    printf("Message recu incorrect.\n");
+    return 0;
+      
+  }
 
   /* Print the response */
   printf("Message recu :\n");
@@ -196,6 +210,13 @@ int envoie_couleurs(
         read_status;
   memset(data, 0, sizeof(data));
   analyse(pathname, data);
+  
+  /* Test the message */
+  if(validateur_format_message_json(data) == -1 || validateur_content_message_json(data) == -1){
+    printf("Message à envoyer incorrect.\n");
+    return 0;
+      
+  }
 
   /* Send to the server the message */
   write_status = write(socketfd, data, strlen(data));
@@ -213,6 +234,13 @@ int envoie_couleurs(
     return -1;
 
   } /* Error read */
+  
+  /* Test the message */
+  if(validateur_format_message_json(data) == -1 || validateur_content_message_json(data) == -1){
+    printf("Message recu incorrect.\n");
+    return 0;
+      
+  }
 
   /* Print the response */
   printf("Message recu :\n");

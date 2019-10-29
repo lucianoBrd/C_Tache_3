@@ -64,6 +64,13 @@ int plot(
 
   create_message_json(save, json_save);
   delete_message_json(json_save);
+  
+  /* Test the message */
+  if(validateur_format_message_json(save) == -1 || validateur_content_message_json(save) == -1){
+    printf("Message à envoyer incorrect.\n");
+    return 0;
+      
+  }
 
   data_size = write(client_socket_fd, (void *) save, strlen(save));
 
@@ -94,6 +101,14 @@ int renvoie_message(
 
   /* Create a message to return to the client */
   create_message_json(data, json);
+  
+  /* Test the message */
+  if(validateur_format_message_json(data) == -1 || validateur_content_message_json(data) == -1){
+    printf("Message à envoyer incorrect.\n");
+    return 0;
+      
+  }
+  
   data_size = write(client_socket_fd, (void *) data, strlen(data));
 
   if(data_size < 0){
@@ -118,6 +133,13 @@ int renvoie_nom_client(
   int 	client_socket_fd,
   char 	*data
 ){
+  /* Test the message */
+  if(validateur_format_message_json(data) == -1 || validateur_content_message_json(data) == -1){
+    printf("Message à envoyer incorrect.\n");
+    return 0;
+      
+  }
+  
   int data_size = write (client_socket_fd, (void *) data, strlen(data));
 
   if(data_size < 0){
@@ -191,6 +213,13 @@ int recois_numero_calcule(
 
   create_message_json(save, json_save);
   delete_message_json(json_save);
+  
+  /* Test the message */
+  if(validateur_format_message_json(save) == -1 || validateur_content_message_json(save) == -1){
+    printf("Message à envoyer incorrect.\n");
+    return 0;
+      
+  }
 
   data_size = write (client_socket_fd, (void *) save, strlen(save));
 
@@ -242,6 +271,13 @@ int recois_envoie_message(
     return(EXIT_FAILURE);
 
   } /* Error read */
+  
+  /* Test the message */
+  if(validateur_format_message_json(data) == -1 || validateur_content_message_json(data) == -1){
+    printf("Message recu incorrect.\n");
+    return 0;
+      
+  }
 
   /* Print the message of the client */
   printf("Message recu :\n");
