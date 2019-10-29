@@ -19,8 +19,10 @@ Dans la [Tache2](https://github.com/lucianoBrd/C_Tache_2), nous avons géré :
   * L'envoie et la réception de message entre le client et le serveur au format JSON.
   * Nous avons utilisé le format d'image bmp.
 
-Dans la Tache3, nous avons géré :
-  *
+Dans la [Tache3](https://github.com/lucianoBrd/C_Tache_3), nous avons géré :
+  * Assurer que le transfert des messages
+    entre le client et le serveur respecte le format JSON et le protocole de
+    communication.
 
 ## Fichiers: Noms de fichiers
 
@@ -62,6 +64,14 @@ couleur.c
 couleur.h
 ```
 
+Il y a 2 fichiers pour la partie validateur :
+```
+validateur.c
+validateur.h
+```
+Nous avons créé des fonctions permettant de vérifier
+la forme et le contenu d'un message.
+
 Il y a 1 fichier pour compiler le projet :
 ```
 Makefile
@@ -88,9 +98,8 @@ Dans ce projet, nous utilisons plusieurs bibliothèques standards :
 
 ##  Difficulté: niveau de difficulté (facile, moyenne, difficile)
 
-Le plus délicat fut de trouver une structure permettant d'externaliser
-la gestion des messages JSON. De plus, la gestion de la mémoire pour
-allouer ou libérer de la mémoire pour notre structure était obligatoire.
-La difficulté était donc moyenne.
+Durant cette tache, il a fallu penser aux nombreux cas possibles qui font 
+qu'un message JSON n'est pas valide. Mais après cela il suffit de mettre 
+en oeuvre des vérifications. Le niveau de difficulté fut moyen.
 
 ## Commentaires (optionnels): remarques etc.
