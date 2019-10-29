@@ -27,6 +27,11 @@ int validateur_content_message_json(
       return -1;
       
     }
+    if(validateur_string_content_message_json(message) == -1){
+        delete_message_json(json);
+        return -1;
+      
+    }
   }
   
   if(strcmp(json->code, "calcule") == 0){
@@ -35,17 +40,40 @@ int validateur_content_message_json(
       return -1;
       
     }
-  }
-  
-  if(strcmp(json->code, "couleurs") == 0){
-    if(json->nb_valeurs > 1){
+    if(atof(json->valeurs[1]) == 0.0 || atof(json->valeurs[2]) == 0.0){
       delete_message_json(json);
       return -1;
       
     }
+    if(validateur_calcule_content_message_json(message) == -1){
+        delete_message_json(json);
+        return -1;
+      
+    }
+    
+  }
+  
+  if(strcmp(json->code, "couleurs") == 0){
+    if(json->nb_valeurs < 2){
+      delete_message_json(json);
+      return -1;
+      
+    }
+    if(atof(json->valeurs[0]) == 0.0){
+      delete_message_json(json);
+      return -1;
+      
+    }
+    if(validateur_couleurs_content_message_json(message) == -1){
+        delete_message_json(json);
+        return -1;
+      
+    }
+    
   }
   
   delete_message_json(json);
+  return 0;
 }
 
 int validateur_format_message_json(
@@ -56,7 +84,7 @@ int validateur_format_message_json(
   if(validateur_guille_format_message_json(message) < 0){
     return -1;
     
-  }
+  } /* Test there are good number of guillemets */
   
   if(validateur_accolades_format_message_json(message) < 0){
     return -1;
@@ -229,11 +257,11 @@ int validateur_char_format_message_json(
   while(message[i] != '\0'){
     if(message[i] != ' ' && message[i] != '\n' && message[i] != '\r'){
       if(message[i] == char_test){
-	valid = 0;
-	break;
+        valid = 0;
+        break;
 	
       } else {
-	break;
+        break;
 	
       }
       
@@ -257,18 +285,18 @@ int validateur_valeurs_format_message_json(
   int valid = -1;
   while(message[i] != '\0'){
     if(message[i] != ' ' && message[i] != '\n' && message[i] != '\r'){
-      if( i > 7 			&&
-	  message[i]     == 's' 	&&
-	  message[i - 1] == 'r' 	&&
-	  message[i - 2] == 'u' 	&&
-	  message[i - 3] == 'e' 	&&
-	  message[i - 4] == 'l' 	&&
-	  message[i - 5] == 'a' 	&&
-	  message[i - 6] == 'v' 	&&
-	  message[i + 1] == '"' 	&&
-	  message[i - 7] == '"' 	){
-	valid = 0;
-	break;
+      if(   i > 7 			&&
+            message[i]     == 's' 	&&
+            message[i - 1] == 'r' 	&&
+            message[i - 2] == 'u' 	&&
+            message[i - 3] == 'e' 	&&
+            message[i - 4] == 'l' 	&&
+            message[i - 5] == 'a' 	&&
+            message[i - 6] == 'v' 	&&
+            message[i + 1] == '"' 	&&
+            message[i - 7] == '"' 	){
+        valid = 0;
+        break;
 	
       }
       
@@ -306,5 +334,206 @@ int validateur_char_after_format_message_json(
   }
   i++;
   return i;
+  
+}
+
+int validateur_string_content_message_json(
+  char 	*message
+){
+  int i = 0;
+    while(message[i] != '\0'){
+        if( i > 7 			&&
+            message[i]     == 's' 	&&
+            message[i - 1] == 'r' 	&&
+            message[i - 2] == 'u' 	&&
+            message[i - 3] == 'e' 	&&
+            message[i - 4] == 'l' 	&&
+            message[i - 5] == 'a' 	&&
+            message[i - 6] == 'v' 	&&
+            message[i + 1] == '"' 	&&
+            message[i - 7] == '"' 	){
+            break;
+        
+        }
+      
+        i++;
+    }
+    while(message[i] != '\0'){
+        if(message[i] == ':'){
+            break;
+            
+        }
+        i++;
+    }
+    while(message[i] != '\0'){
+        if(message[i] == '['){
+            i++;
+            break;
+            
+        }
+        i++;
+    }
+    while(message[i] != '\0'){
+        if(message[i] != ' ' && message[i] != '\n' && message[i] != '\r'){
+            break;
+            
+        }
+        i++;
+    }
+    if(message[i] != '"')
+        return -1;
+    
+    return 0;
+  
+}
+
+int validateur_calcule_content_message_json(
+  char 	*message
+){
+  int i = 0;
+    while(message[i] != '\0'){
+        if( i > 7 			&&
+            message[i]     == 's' 	&&
+            message[i - 1] == 'r' 	&&
+            message[i - 2] == 'u' 	&&
+            message[i - 3] == 'e' 	&&
+            message[i - 4] == 'l' 	&&
+            message[i - 5] == 'a' 	&&
+            message[i - 6] == 'v' 	&&
+            message[i + 1] == '"' 	&&
+            message[i - 7] == '"' 	){
+            break;
+        
+        }
+      
+        i++;
+    }
+    while(message[i] != '\0'){
+        if(message[i] == ':'){
+            break;
+            
+        }
+        i++;
+    }
+    while(message[i] != '\0'){
+        if(message[i] == '['){
+            i++;
+            break;
+            
+        }
+        i++;
+    }
+    while(message[i] != '\0'){
+        if(message[i] != ' ' && message[i] != '\n' && message[i] != '\r'){
+            break;
+            
+        }
+        i++;
+    }
+    if(message[i] != '"')
+        return -1;
+    while(message[i] != '\0'){
+        if(message[i] == ','){
+            i++;
+            break;
+            
+        }
+        i++;
+    }
+    while(message[i] != '\0'){
+        if(message[i] != ' ' && message[i] != '\n' && message[i] != '\r'){
+            break;
+            
+        }
+        i++;
+    }
+    if(message[i] == '"')
+        return -1;
+    while(message[i] != '\0'){
+        if(message[i] == ','){
+            i++;
+            break;
+            
+        }
+        i++;
+    }
+    while(message[i] != '\0'){
+        if(message[i] != ' ' && message[i] != '\n' && message[i] != '\r'){
+            break;
+            
+        }
+        i++;
+    }
+    if(message[i] == '"')
+        return -1;
+    
+    return 0;
+  
+}
+
+int validateur_couleurs_content_message_json(
+  char 	*message
+){
+  int i = 0;
+    while(message[i] != '\0'){
+        if( i > 7 			&&
+            message[i]     == 's' 	&&
+            message[i - 1] == 'r' 	&&
+            message[i - 2] == 'u' 	&&
+            message[i - 3] == 'e' 	&&
+            message[i - 4] == 'l' 	&&
+            message[i - 5] == 'a' 	&&
+            message[i - 6] == 'v' 	&&
+            message[i + 1] == '"' 	&&
+            message[i - 7] == '"' 	){
+            break;
+        
+        }
+      
+        i++;
+    }
+    while(message[i] != '\0'){
+        if(message[i] == ':'){
+            break;
+            
+        }
+        i++;
+    }
+    while(message[i] != '\0'){
+        if(message[i] == '['){
+            i++;
+            break;
+            
+        }
+        i++;
+    }
+    while(message[i] != '\0'){
+        if(message[i] != ' ' && message[i] != '\n' && message[i] != '\r'){
+            break;
+            
+        }
+        i++;
+    }
+    if(message[i] == '"')
+        return -1;
+    while(message[i] != '\0'){
+        if(message[i] == ','){
+            i++;
+            while(message[i] != '\0'){
+                if(message[i] != ' ' && message[i] != '\n' && message[i] != '\r'){
+                    if(message[i] != '"')
+                        return -1;
+                    else 
+                        break;
+                    
+                }
+                i++;
+            }
+            
+        }
+        i++;
+    }
+    
+    return 0;
   
 }

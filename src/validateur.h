@@ -41,5 +41,16 @@ int validateur_char_after_format_message_json(
   char	char_test
 );
 
+int validateur_string_content_message_json(
+  char 	*message
+);
+
+int validateur_calcule_content_message_json(
+  char 	*message
+);
+
+int validateur_couleurs_content_message_json(
+  char 	*message
+);
 
 #endif

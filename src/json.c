@@ -66,7 +66,7 @@ message_json *create_object_json(
   char *message
 ){
   int i		= 0,
-      compt 	= 0,
+      compt = 0,
       bool 	= 0;
 
   while(message[i] != '\0'){
@@ -110,7 +110,7 @@ message_json *create_object_json(
 
   /* Get the code */
   while(message[i] != '\0'){
-    if( i > 4	 		              &&
+    if( i > 4	                &&
         message[i]     == 'e' 	&&
         message[i - 1] == 'd' 	&&
         message[i - 2] == 'o' 	&&
@@ -158,7 +158,7 @@ message_json *create_object_json(
 
   /* Get the valeurs */
   while(message[i] != '\0'){
-    if( i > 7			&&
+    if( i > 7			        &&
         message[i]     == 's' 	&&
         message[i - 1] == 'r' 	&&
         message[i - 2] == 'u' 	&&
@@ -167,35 +167,40 @@ message_json *create_object_json(
         message[i - 5] == 'a' 	&&
         message[i - 6] == 'v' 	){
       /* Don't get the first " */
-      i     = i + 2;
+      while(message[i] != '['){
+        i++;
+        
+      }
       bool  = 1;
 
     } /* When find valeurs */
 
     if(bool != 0){
-      if(message[i] != '[' && message[i] == ','){
-	if(bool_string == 0){
-	   bool_string = 1;
-	   i++;
+      if(message[i] != '['){
+        if(bool_string == 0){
+            bool_string = 1;
 
-	} else {
-	  /* We finish to get the code */
-	  bool_string  = 0;
-	  tmp[j]       = '\0';
-	  strcpy(json->valeurs[compt], tmp);
-	  compt++;
-	  j = 0;
+        } else if(message[i] == ',' || message[i] == ']') {
+            /* We finish to get the valeur */
+            bool_string  = 0;
+            tmp[j]       = '\0';
+            strcpy(json->valeurs[compt], tmp);
+            compt++;
+            j = 0;
 
-	}
+        }
 
-     } /* Know wich " is it */
+     } /* We are inside the table of values */
 
      if(bool_string != 0){
-       if(message[i] != '"'){
-	tmp[j] = message[i];
-	j++;
+       if(  message[i] != '"'   && 
+            message[i] != ' '   && 
+            message[i] != '\n'  && 
+            message[i] != '\r'  ){
+        tmp[j] = message[i];
+        j++;
 	
-       }
+       } /* Don't get these char */
 
      } /* Save the value of the valeurs */
 

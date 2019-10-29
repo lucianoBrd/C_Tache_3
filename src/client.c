@@ -28,7 +28,7 @@ int envoie_recois_message(
   char  *pathname
 ){
   if(	strcmp(type, "message")  != 0 &&
-    	strcmp(type, "nom") 	   != 0 &&
+    	strcmp(type, "nom") 	 != 0 &&
     	strcmp(type, "calcule")  != 0 &&
     	strcmp(type, "couleurs") != 0 ){
     printf("Type inconnue\n");
@@ -260,29 +260,12 @@ int main(
 
   char type[DATA_SIZE];
 
-  /* Ask wich function execute 
+  /* Ask wich function execute */
   printf("Quelle fonction lancer (message, nom, calcule ou couleurs): ");
   fgets(type, DATA_SIZE, stdin);
 
-  /* Remove the return line 
-  type[strcspn(type, "\n")] = 0;*/
-  
-  /* Create object */
-  message_json *json = new_message_json(3);
-  /* Set the code of the message */
-  strcpy(json->code, "couleurs");
-  strcpy(json->valeurs[0], "10");
-  strcpy(json->valeurs[1], "oui");
-  strcpy(json->valeurs[2], "test");
-
-  char  data[DATA_SIZE];
-  
-  /* Create the string and delete the object */
-  create_message_json(data, json);
-  print_message_json(create_object_json(data));
-  delete_message_json(json);
-  
-  printf("%d", validateur_format_message_json(data));
+  /* Remove the return line */
+  type[strcspn(type, "\n")] = 0;
 
   envoie_recois_message(socketfd, type, argv[1]);
 
