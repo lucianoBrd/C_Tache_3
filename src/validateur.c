@@ -50,7 +50,7 @@ int validateur_content_message_json(
         return -1;
       
     }
-  }
+  } /* Message or name case */
   
   if(strcmp(json->code, "calcule") == 0){
     if(json->nb_valeurs != 3){
@@ -69,7 +69,7 @@ int validateur_content_message_json(
       
     }
     
-  }
+  } /* Calcule case */
   
   if(strcmp(json->code, "couleurs") == 0){
     if(json->nb_valeurs < 2){
@@ -88,7 +88,7 @@ int validateur_content_message_json(
       
     }
     
-  }
+  } /* Couleurs case */
   
   delete_message_json(json);
   return 0;
